@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from 'core/redux/rootReducer';
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: rootReducer,
 	devTools: process.env.NODE_ENV !== 'production',
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

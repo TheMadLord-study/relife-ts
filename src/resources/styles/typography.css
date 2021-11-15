@@ -1,0 +1,18 @@
+@font-face {
+	font-family: 'SFPro-Regular';
+	src: local('SFPro-Regular'),
+		url('resources/fonts/SFProDisplay-Regular.ttf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+body {
+	font-family: 'SFPro-Regular';
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}

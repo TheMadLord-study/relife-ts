@@ -1,0 +1,107 @@
+/* Убираем стандартные стили */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+button {
+	background-color: transparent;
+	color: inherit;
+	border-width: 0;
+	padding: 0;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+	outline: none;
+}
+figure {
+	margin: 0;
+}
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+ul,
+ol,
+dd {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	font-size: inherit;
+	font-weight: inherit;
+}
+p {
+	margin: 0;
+}
+cite {
+	font-style: normal;
+}
+fieldset {
+	border-width: 0;
+	padding: 0;
+	margin: 0;
+}
+
+/* Отключаем outline */
+
+input[type='text'] {
+	outline: none !important;
+}
+
+input[type='number'] {
+	outline: none !important;
+}
+
+input[type='number']:focus {
+	outline: none !important;
+}
+
+input[type='text']:focus {
+	outline: none !important;
+}
+
+input[type='radio'] {
+	-moz-appearance: initial;
+}
+
+/* Отключаем скроллбар (Сомнительное решение, но таков путь) */
+
+::-webkit-scrollbar {
+	width: 0px; /* Remove scrollbar space */
+	background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+* {
+	overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none; /* IE 11 */
+	scrollbar-width: none; /* Firefox 64 */
+}
+
+#root {
+	text-align: center;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
