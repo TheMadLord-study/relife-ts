@@ -1,0 +1,19 @@
+@import 'resources/styles/colors';
+
+.modal {
+	position: fixed;
+	width: 500px;
+	height: 500px;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	background-color: $overlay;
+}
