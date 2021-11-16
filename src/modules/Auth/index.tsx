@@ -19,7 +19,9 @@ const Auth = (props: Props) => {
 	};
 
 	const handleEmailSubmit = () => {
-		loginEmail({ username: email, password: password });
+		loginEmail({ username: email, password: password }).then((res) => {
+			console.log(res);
+		});
 	};
 
 	return (
