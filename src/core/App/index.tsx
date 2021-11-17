@@ -1,10 +1,11 @@
+import React, { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from 'modules/Header';
 import Home from 'modules/Home';
 import Auth from 'modules/Auth';
 
-const App = () => {
+const App: FC = () => {
 	return (
 		<>
 			<Header />

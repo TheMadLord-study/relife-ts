@@ -1,23 +1,15 @@
 import axios from 'axios';
-// import { getCookie } from 'library/helpers/common/cookies';
 
-const xhr = axios.create();
-
-// const token = getCookie('token');
-
-// if (token) {
-// 	xhr.defaults.headers.common['Authorization'] = `Token ${token}`;
-// }
-
-// xhr.defaults.headers.common['Content-Type'] = 'application/json';
-
-xhr.interceptors.response.use(
-	(response) => {
-		return response;
+const xhr = axios.create({
+	withCredentials: true,
+	headers: {
+		'Content-Type': 'application/json',
 	},
-	(error) => {
-		return error;
-	}
-);
+});
+
+xhr.interceptors.request.use((config: any) => {
+	config.headers.Authorization = `Token ${localStorage.getItem('token')}`;
+	return config;
+});
 
 export default xhr;
