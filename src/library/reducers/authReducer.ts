@@ -1,19 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from 'core/services/authService';
+import xhr from 'core/axios/config';
+
+import { getIAm } from 'library/reducers/usersReducer';
 
 interface AuthState {
+	isUpdating: boolean;
 	isAuth: boolean;
 }
 
 const initialState = {
+	isUpdating: false,
 	isAuth: false,
 } as AuthState;
 
 export const login = createAsyncThunk(
 	'auth/login',
-	async ({ username, password }: { username: string; password: string }) => {
+	async ({ username, password }: { username: string; password: string }, { dispatch }) => {
 		const response = await authService.login(username, password);
-		return response;
+		if (response.status === 200) {
+			localStorage.setItem('token', response.data.key);
+			xhr.interceptors.request.use((config: any) => {
+				config.headers.Authorization = `Token ${response.data.key}`;
+				return config;
+			});
+			dispatch(getIAm());
+		}
+		return response.data;
 	}
 );
 
@@ -33,14 +46,27 @@ export const auth = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(login.fulfilled, (state, action) => {
+		builder.addCase(login.pending, (state, action) => {
 			console.log(action.payload);
-			localStorage.setItem('token', action.payload.data.key);
+			state.isUpdating = true;
+		});
+
+		builder.addCase(login.fulfilled, (state, action) => {
+			state.isUpdating = false;
+			state.isAuth = true;
+		});
+
+		builder.addCase(login.rejected, (state, action) => {
+			console.log(action.payload);
+			localStorage.removeItem('token');
+			state.isUpdating = false;
+			state.isAuth = false;
 		});
 
 		builder.addCase(logout.fulfilled, (state, action) => {
 			console.log(action.payload);
 			localStorage.removeItem('token');
+			state.isAuth = false;
 		});
 	},
 });

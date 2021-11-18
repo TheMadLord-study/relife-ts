@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import { Form, Button } from 'react-bootstrap';
 
-import { login, logout } from 'library/reducers/auth';
+import { login, logout } from 'library/reducers/authReducer';
 
 import st from './index.module.scss';
 
