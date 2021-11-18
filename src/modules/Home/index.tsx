@@ -1,13 +1,10 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { FC } from 'react';
+import { Container, Col } from 'react-bootstrap';
 
-interface Props {}
-
-const Home = (props: Props) => {
+const Home: FC = () => {
 	return (
-		<Container fluid>
-			<Row>
-				<Col>3 of 1</Col>
-			</Row>
+		<Container className="d-flex flex-grow-1">
+			<Col>Home page</Col>
 		</Container>
 	);
 };

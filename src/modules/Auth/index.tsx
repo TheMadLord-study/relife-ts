@@ -49,10 +49,10 @@ const Auth: FC = () => {
 					<Form.Check type="checkbox" label="Check me out" />
 				</Form.Group>
 				<Button variant="primary" onClick={() => handleLogin()}>
-					Submit
+					Login
 				</Button>
 				<Button variant="primary" onClick={() => dispatch(logout())}>
-					Unlogin
+					Logout
 				</Button>
 			</Form>
 		</Modal>
