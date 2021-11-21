@@ -1,9 +1,9 @@
 import xhr from 'core/axios/config';
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-import { LoginResponse } from 'library/models/Auth';
+import { Login } from 'library/models/Auth';
 
-const login = async (username: string, password: string): Promise<AxiosResponse<LoginResponse>> => {
+const login = async (username: string, password: string): Promise<AxiosResponse<Login>> => {
 	return axios.post('/auth/rest-auth/login/', { username, password });
 };
 

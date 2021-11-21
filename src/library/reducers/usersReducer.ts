@@ -1,17 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userService } from 'library/services/usersService';
 
-interface UsersState {
-	user: any;
+import { IAm } from 'library/models/Users';
+
+interface UserState {
+	user: IAm;
 }
 
 const initialState = {
 	user: {},
-} as UsersState;
+} as UserState;
 
 export const getIAm = createAsyncThunk('users/i_am', async () => {
 	const response = await userService.getIAm();
-	return response;
+	return response.data;
 });
 
 export const users = createSlice({
@@ -20,7 +22,7 @@ export const users = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(getIAm.fulfilled, (state, action) => {
-			state.user = action.payload.data;
+			state.user = action.payload;
 		});
 	},
 });

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import { Form, Button } from 'react-bootstrap';
 
-import { login, logout } from 'library/reducers/authReducer';
+import { login, reset } from 'library/reducers/authReducer';
 
 import st from './index.module.scss';
 
@@ -51,7 +51,7 @@ const Auth: FC = () => {
 				<Button variant="primary" onClick={() => handleLogin()}>
 					Login
 				</Button>
-				<Button variant="primary" onClick={() => dispatch(logout())}>
+				<Button variant="primary" onClick={() => dispatch(reset())}>
 					Logout
 				</Button>
 			</Form>

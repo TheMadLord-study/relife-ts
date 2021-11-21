@@ -1,9 +1,9 @@
 import xhr from 'core/axios/config';
 import { AxiosResponse } from 'axios';
 
-import { i_am } from 'library/models/Users';
+import { IAm } from 'library/models/Users';
 
-const getIAm = (): Promise<AxiosResponse<i_am>> => {
+const getIAm = async (): Promise<AxiosResponse<IAm>> => {
 	return xhr.get('/users/i_am/');
 };
 

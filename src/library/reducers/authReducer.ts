@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from 'library/services/authService';
 import xhr from 'core/axios/config';
-
-import { getIAm } from 'library/reducers/usersReducer';
-
 interface AuthState {
 	isUpdating: boolean;
 	isAuth: boolean;
@@ -24,7 +21,6 @@ export const login = createAsyncThunk(
 				config.headers.Authorization = `Token ${response.data.key}`;
 				return config;
 			});
-			dispatch(getIAm());
 		}
 		return response.data;
 	}
@@ -44,6 +40,7 @@ export const auth = createSlice({
 		makeUnauth: (state: AuthState) => {
 			state.isAuth = false;
 		},
+		reset: (state) => {},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(login.pending, (state, action) => {
@@ -64,13 +61,12 @@ export const auth = createSlice({
 		});
 
 		builder.addCase(logout.fulfilled, (state, action) => {
-			console.log(action.payload);
 			localStorage.removeItem('token');
 			state.isAuth = false;
 		});
 	},
 });
 
-export const { makeAuth, makeUnauth } = auth.actions;
+export const { makeAuth, makeUnauth, reset } = auth.actions;
 
 export default auth.reducer;

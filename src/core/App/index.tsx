@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import useToken from 'library/hooks/useToken';
+import useLoginStatus from 'library/hooks/useLoginStatus';
 
 import Header from 'modules/Header';
 import Home from 'modules/Home';
@@ -9,7 +9,7 @@ import Auth from 'modules/Auth';
 import Test from 'modules/Test';
 
 const App: FC = () => {
-	useToken();
+	useLoginStatus();
 	return (
 		<>
 			<Header />
