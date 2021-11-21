@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { userService } from 'core/services/usersService';
+import { userService } from 'library/services/usersService';
 
 interface UsersState {
 	user: any;

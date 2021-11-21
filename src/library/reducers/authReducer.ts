@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { authService } from 'core/services/authService';
+import { authService } from 'library/services/authService';
 import xhr from 'core/axios/config';
 
 import { getIAm } from 'library/reducers/usersReducer';
