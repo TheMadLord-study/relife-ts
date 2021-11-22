@@ -2,7 +2,6 @@ import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getIAm } from 'library/reducers/usersReducer';
-import { reset } from 'library/reducers/authReducer';
 
 const useLoginStatus = () => {
 	const dispatch = useDispatch();
@@ -11,8 +10,6 @@ const useLoginStatus = () => {
 		const key = localStorage.getItem('token');
 		if (key) {
 			dispatch(getIAm());
-		} else {
-			dispatch(reset());
 		}
 	}, [dispatch]);
 

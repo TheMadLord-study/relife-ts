@@ -1,60 +1,44 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
-import { Form, Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
-import { login, reset } from 'library/reducers/authReducer';
+import { useAppSelector } from 'library/hooks/reduxTypedHooks';
+import useRegister from 'library/hooks/useRegister';
+
+import Login from './frames/LoginForm';
+import Register from './frames/RegisterForm';
 
 import st from './index.module.scss';
 
 const Auth: FC = () => {
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
+	const [tab, setTab] = useState<string>('register');
+	const isOpen = useAppSelector((store) => store.modals.authModalIsOpen);
 
-	const dispatch = useDispatch();
-
-	const handleLogin = () => {
-		dispatch(login({ username: 'terranovas121@gmail.com', password: '111222asD' }));
-	};
+	const register = useRegister();
 
 	return (
 		<Modal
-			isOpen
+			isOpen={isOpen}
 			className={st.modal}
 			overlayClassName={st.overlay}
 			appElement={document.getElementById('root') as HTMLElement}
 		>
-			<Form>
-				<Form.Group className="mb-3" controlId="formBasicEmail">
-					<Form.Label>Email address</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-				</Form.Group>
-
-				<Form.Group className="mb-3" controlId="formBasicPassword">
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicCheckbox">
-					<Form.Check type="checkbox" label="Check me out" />
-				</Form.Group>
-				<Button variant="primary" onClick={() => handleLogin()}>
-					Login
-				</Button>
-				<Button variant="primary" onClick={() => dispatch(reset())}>
-					Logout
-				</Button>
-			</Form>
+			<Row xs={2} md={4} lg={6}>
+				<Col>
+					<Button variant="primary" onClick={() => setTab('register')}>
+						Register
+					</Button>
+				</Col>
+				<Col>
+					<Button variant="primary" onClick={() => setTab('login')}>
+						Login
+					</Button>
+				</Col>
+			</Row>
+			<Row>
+				{tab === 'register' && <Register />}
+				{tab === 'login' && <Login />}
+			</Row>
 		</Modal>
 	);
 };

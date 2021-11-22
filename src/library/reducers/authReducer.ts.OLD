@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from 'library/services/authService';
+import { Login } from 'library/models/Auth';
 import xhr from 'core/axios/config';
 interface AuthState {
 	isUpdating: boolean;
@@ -11,20 +12,17 @@ const initialState = {
 	isAuth: false,
 } as AuthState;
 
-export const login = createAsyncThunk(
-	'auth/login',
-	async ({ username, password }: { username: string; password: string }, { dispatch }) => {
-		const response = await authService.login(username, password);
-		if (response.status === 200) {
-			localStorage.setItem('token', response.data.key);
-			xhr.interceptors.request.use((config: any) => {
-				config.headers.Authorization = `Token ${response.data.key}`;
-				return config;
-			});
-		}
-		return response.data;
-	}
-);
+// export const login = createAsyncThunk('auth/login', async (data: Login, { dispatch }) => {
+// 	const response = await authService.login({ username: data.username, password: data.password });
+// 	if (response.status === 200) {
+// 		localStorage.setItem('token', response.data.key);
+// 		xhr.interceptors.request.use((config: any) => {
+// 			config.headers.Authorization = `Token ${response.data.key}`;
+// 			return config;
+// 		});
+// 	}
+// 	return response.data;
+// });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
 	await authService.logout();

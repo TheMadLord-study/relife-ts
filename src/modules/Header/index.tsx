@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
-import Status from './frames/Status';
+import { openAuthModal } from 'library/reducers/modalReducer';
+import { useAppDispatch } from 'library/hooks/reduxTypedHooks';
 
-interface Props {}
-
-const Header: FC = (props: Props) => {
+const Header: FC = () => {
+	const dispatch = useAppDispatch();
 	return (
 		<Navbar bg="dark" variant="dark">
 			<Container>
@@ -17,10 +17,9 @@ const Header: FC = (props: Props) => {
 					<Button variant="primary">Test</Button>
 				</Link>
 				<Nav>
-					<Status />
-					<Link to="/login">
-						<Button variant="primary">Login</Button>
-					</Link>
+					<Button onClick={() => dispatch(openAuthModal())} variant="primary">
+						Login
+					</Button>
 				</Nav>
 			</Container>
 		</Navbar>

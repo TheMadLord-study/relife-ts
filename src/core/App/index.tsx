@@ -15,9 +15,9 @@ const App: FC = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Auth />} />
 				<Route path="/test" element={<Test />} />
 			</Routes>
+			<Auth />
 		</>
 	);
 };

@@ -1,12 +1,12 @@
 import { combineReducers, AnyAction, Reducer } from '@reduxjs/toolkit';
-import auth from 'library/reducers/authReducer';
 import users from 'library/reducers/usersReducer';
+import modals from 'library/reducers/modalReducer';
 
 import { RootState } from 'core/redux/store';
 
 const combinedReducer = combineReducers({
-	auth,
 	users,
+	modals,
 });
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
