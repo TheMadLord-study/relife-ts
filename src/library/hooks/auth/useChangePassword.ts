@@ -21,11 +21,15 @@ const useChangePassword = () => {
 
 	const confirmReset = async (code: string, password: string) => {
 		setIsLoading(true);
+		setError({} as AxiosError);
 		await authService
 			.passwordConfirm({ phonenumber: phonenumber, passcode: code, password: password })
 			.then((response) => {
 				console.log(response);
 				setStep('3-login');
+			})
+			.catch((error) => {
+				setError(error);
 			});
 		setIsLoading(false);
 	};

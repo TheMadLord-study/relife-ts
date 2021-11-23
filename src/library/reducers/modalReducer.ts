@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from 'core/redux/store';
+import type { RootState } from 'core/redux/rootReducer';
 
 interface ModalState {
 	authModalIsOpen: boolean;

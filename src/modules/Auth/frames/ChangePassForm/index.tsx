@@ -41,7 +41,14 @@ interface CodeProps {
 }
 
 const CodeForm = ({ submit, isLoading }: CodeProps) => {
-	const { register, handleSubmit } = useForm<CodeValues>();
+	const {
+		register,
+		handleSubmit,
+		getValues,
+		formState: { errors },
+	} = useForm<CodeValues>();
+
+	console.log(errors);
 
 	return (
 		<form
@@ -52,7 +59,10 @@ const CodeForm = ({ submit, isLoading }: CodeProps) => {
 			<input {...register('code', { required: true })} id="code" disabled={isLoading} placeholder="Код" />
 			<input {...register('password', { required: true })} id="password" disabled={isLoading} placeholder="Пароль" />
 			<input
-				{...register('repeat', { required: true })}
+				{...register('repeat', {
+					required: true,
+					validate: (value) => value === getValues().password || 'Passwords not match',
+				})}
 				id="repeat"
 				disabled={isLoading}
 				placeholder="Повторить пароль..."
