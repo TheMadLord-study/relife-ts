@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+
 const xhr = axios.create({
 	withCredentials: true,
 	headers: {
@@ -7,9 +9,8 @@ const xhr = axios.create({
 	},
 });
 
-xhr.interceptors.request.use((config: any) => {
-	config.headers.Authorization = `Token ${localStorage.getItem('token')}`;
-	return config;
-});
+if (token) {
+	xhr.defaults.headers.common['Authorization'] = `Token ${token}`;
+}
 
 export default xhr;

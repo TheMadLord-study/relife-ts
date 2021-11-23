@@ -1,30 +1,35 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import xhr from 'core/axios/config';
 
 import { getIAm, clearUserData } from 'library/reducers/usersReducer';
-import { useAppDispatch, useAppSelector } from '../common/reduxTypedHooks';
+import { getSettings } from 'library/reducers/commonReduser';
+import { useAppDispatch } from '../common/reduxTypedHooks';
 
 const useLoginStatus = () => {
 	const dispatch = useAppDispatch();
-	const user = useAppSelector((state) => state.users.user);
 	const navigate = useNavigate();
 
 	const checkToken = useCallback(() => {
-		const key = localStorage.getItem('token');
-		if (key && !user.id) {
+		const token = localStorage.getItem('token');
+		if (token) {
+			xhr.defaults.headers.common['Authorization'] = `Token ${token}`;
 			dispatch(getIAm());
-		} else if (!key) {
+		} else if (!token) {
+			delete xhr.defaults.headers.common.Authorization;
 			dispatch(clearUserData());
 			navigate('/');
 		}
-	}, [dispatch, navigate, user.id]);
+		dispatch(getSettings());
+	}, [dispatch, navigate]);
 
 	const loadUserData = useCallback(() => {
-		const key = localStorage.getItem('token');
-		if (key && !user.id) {
+		const token = localStorage.getItem('token');
+		if (token) {
 			dispatch(getIAm());
 		}
-	}, [dispatch, user.id]);
+		dispatch(getSettings());
+	}, [dispatch]);
 
 	useEffect(() => {
 		loadUserData();

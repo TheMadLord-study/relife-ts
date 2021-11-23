@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import xhr from 'core/axios/config';
+
 import { userService } from 'library/services/usersService';
 import { authService } from 'library/services/authService';
 
@@ -21,6 +23,7 @@ export const logout = createAsyncThunk('users/logout', async () => {
 	const response = await authService.logout();
 	if (response.status === 200) {
 		localStorage.removeItem('token');
+		delete xhr.defaults.headers.common.Authorization;
 	}
 });
 

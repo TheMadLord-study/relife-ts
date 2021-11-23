@@ -8,6 +8,7 @@ import { Login } from 'library/models/Auth';
 import { authService } from 'library/services/authService';
 
 import { getIAm, logout } from 'library/reducers/usersReducer';
+import { getSettings } from 'library/reducers/commonReduser';
 import { closeAuthModal } from 'library/reducers/modalReducer';
 
 const useLogin = () => {
@@ -25,11 +26,9 @@ const useLogin = () => {
 			.login(data)
 			.then((response) => {
 				localStorage.setItem('token', response.data.key);
-				xhr.interceptors.request.use((config: any) => {
-					config.headers.Authorization = `Token ${response.data.key}`;
-					return config;
-				});
+				xhr.defaults.headers.common['Authorization'] = `Token ${response.data.key}`;
 				dispatch(getIAm());
+				dispatch(getSettings());
 				dispatch(closeAuthModal());
 			})
 			.catch((error: AxiosError) => {
@@ -42,6 +41,7 @@ const useLogin = () => {
 		setError({} as AxiosError);
 		setIsLoading(true);
 		await dispatch(logout());
+		dispatch(getSettings());
 		setIsLoading(false);
 	};
 
