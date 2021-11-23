@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
 import useUser from 'library/hooks/useUser';
+import useLogin from 'library/hooks/useLogin';
 
 import { openAuthModal } from 'library/reducers/modalReducer';
-import { logout } from 'library/reducers/usersReducer';
 import { useAppDispatch } from 'library/hooks/reduxTypedHooks';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
 	const user = useUser();
+	const { logoutUser, isLoading } = useLogin();
 	return (
 		<Navbar bg="dark" variant="dark">
 			<Container>
@@ -26,7 +27,7 @@ const Header: FC = () => {
 							Login
 						</Button>
 					) : (
-						<Button onClick={() => dispatch(logout())} variant="primary">
+						<Button onClick={() => logoutUser()} variant="primary" disabled={isLoading}>
 							Logout
 						</Button>
 					)}

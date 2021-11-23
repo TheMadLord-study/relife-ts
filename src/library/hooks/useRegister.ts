@@ -1,60 +1,50 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import xhr from 'core/axios/config';
+import { useAppDispatch } from './reduxTypedHooks';
 
 import { authService } from 'library/services/authService';
 
-interface Error {
-	code: boolean;
-}
-
-interface FormValues {
-	phone: string;
-}
+import { getIAm } from 'library/reducers/usersReducer';
+import { closeAuthModal } from 'library/reducers/modalReducer';
 
 const useRegister = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [step, setStep] = useState<string>('1-phone');
-	const [error, setError] = useState<Error>({ code: false });
-	const [phone, setPhone] = useState<string>('');
-	const [code, setCode] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
+	const [phonenumber, setPhonenumber] = useState<string>('');
 
-	const { register } = useForm<FormValues>();
+	const dispatch = useAppDispatch();
 
-	const registerPhone = async () => {
+	const registerPhone = async (phone: string) => {
 		setIsLoading(true);
-		await authService
-			.registerPhone({ phonenumber: phone })
-			.then((res) => {
-				setStep('code');
-				console.log(res);
-			})
-			.catch(() => {
-				setError({ code: true });
-			});
-		setIsLoading(false);
-	};
-
-	const verifyOnRegister = async () => {
-		setIsLoading(true);
-		await authService.verifyOnRegister({ phonenumber: phone, passcode: code, password: password }).then((res) => {
-			console.log(res);
+		await authService.registerPhone({ phonenumber: phone }).then((response) => {
+			setStep('2-code');
+			setPhonenumber(phone);
+			console.log(response);
 		});
 		setIsLoading(false);
 	};
 
+	const verifyOnRegister = async (code: string, password: string) => {
+		setIsLoading(true);
+		await authService
+			.verifyOnRegister({ phonenumber: phonenumber, passcode: code, password: password })
+			.then((response) => {
+				console.log(response);
+				localStorage.setItem('token', response.data.token);
+				xhr.interceptors.request.use((config: any) => {
+					config.headers.Authorization = `Token ${response.data.token}`;
+					return config;
+				});
+				dispatch(getIAm());
+				dispatch(closeAuthModal());
+			});
+		setIsLoading(false);
+	};
+
 	return {
-		phone,
-		setPhone,
 		isLoading,
 		registerPhone,
-		code,
-		setCode,
-		error,
-		password,
-		setPassword,
 		verifyOnRegister,
-		register,
 		step,
 		setStep,
 	};

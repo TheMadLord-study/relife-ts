@@ -1,7 +1,7 @@
 import xhr from 'core/axios/config';
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-import { Login, LoginResponse, PasscodeCreate, VerifyOnRegister } from 'library/models/Auth';
+import { Login, LoginResponse, PasscodeCreate, VerifyOnRegister, VerifyResponse } from 'library/models/Auth';
 
 const login = async (data: Login): Promise<AxiosResponse<LoginResponse>> => {
 	return axios.post('/auth/rest-auth/login/', data);
@@ -15,7 +15,7 @@ const registerPhone = async (data: PasscodeCreate): Promise<AxiosResponse<Passco
 	return axios.post('/auth/patient/register_phone/', data);
 };
 
-const verifyOnRegister = async (data: VerifyOnRegister): Promise<AxiosResponse<VerifyOnRegister>> => {
+const verifyOnRegister = async (data: VerifyOnRegister): Promise<AxiosResponse<VerifyResponse>> => {
 	return axios.post('/auth/patient/verify_on_register/', data);
 };
 

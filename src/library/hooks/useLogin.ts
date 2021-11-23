@@ -7,7 +7,7 @@ import { Login } from 'library/models/Auth';
 
 import { authService } from 'library/services/authService';
 
-import { getIAm } from 'library/reducers/usersReducer';
+import { getIAm, logout } from 'library/reducers/usersReducer';
 import { closeAuthModal } from 'library/reducers/modalReducer';
 
 const useLogin = () => {
@@ -38,6 +38,13 @@ const useLogin = () => {
 		setIsLoading(false);
 	};
 
+	const logoutUser = async () => {
+		setError({} as AxiosError);
+		setIsLoading(true);
+		await dispatch(logout());
+		setIsLoading(false);
+	};
+
 	return {
 		isLoading,
 		error,
@@ -46,6 +53,7 @@ const useLogin = () => {
 		password,
 		setPassword,
 		login,
+		logoutUser,
 	};
 };
 

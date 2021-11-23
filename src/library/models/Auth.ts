@@ -17,3 +17,8 @@ export interface VerifyOnRegister {
 	passcode: string;
 	password: string;
 }
+
+export interface VerifyResponse {
+	token: string;
+	id: number;
+}
