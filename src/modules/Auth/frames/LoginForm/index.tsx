@@ -24,9 +24,11 @@ const LoginForm = () => {
 				handleLogin(data);
 			})}
 		>
-			<input {...register('phonenumber')} id="phonenumber" />
-			<input {...register('password')} id="password" />
-			<button type="submit">Login</button>
+			<input {...register('phonenumber')} id="phonenumber" disabled={login.isLoading} />
+			<input {...register('password', { required: true, minLength: 6 })} id="password" disabled={login.isLoading} />
+			<button type="submit" disabled={login.isLoading}>
+				Login
+			</button>
 		</form>
 	);
 };

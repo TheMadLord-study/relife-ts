@@ -16,10 +16,13 @@ export const modals = createSlice({
 		openAuthModal: (state: ModalState) => {
 			state.authModalIsOpen = true;
 		},
+		closeAuthModal: (state: ModalState) => {
+			state.authModalIsOpen = false;
+		},
 	},
 });
 
-export const { openAuthModal } = modals.actions;
+export const { openAuthModal, closeAuthModal } = modals.actions;
 
 export const selectAuthOpen = (state: RootState) => state.modals.authModalIsOpen;
 

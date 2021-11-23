@@ -4,6 +4,10 @@ export interface Login {
 	password: string;
 }
 
+export interface LoginResponse {
+	key: string;
+}
+
 export interface PasscodeCreate {
 	phonenumber: string;
 }
