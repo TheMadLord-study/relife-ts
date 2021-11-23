@@ -1,4 +1,4 @@
-import { useAppSelector } from './reduxTypedHooks';
+import { useAppSelector } from '../common/reduxTypedHooks';
 
 const useUser = () => {
 	const user = useAppSelector((store) => store.users.user);

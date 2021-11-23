@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import useLoginStatus from 'library/hooks/useLoginStatus';
+import useLoginStatus from 'library/hooks/user/useLoginStatus';
 
 import Header from 'modules/Header';
 import Home from 'modules/Home';

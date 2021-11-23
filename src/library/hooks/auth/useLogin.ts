@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import xhr from 'core/axios/config';
-import { useAppDispatch } from './reduxTypedHooks';
+import { useAppDispatch } from '../common/reduxTypedHooks';
 
 import { AxiosError } from 'axios';
 import { Login } from 'library/models/Auth';

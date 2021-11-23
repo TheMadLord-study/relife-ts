@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getIAm, clearUserData } from 'library/reducers/usersReducer';
-import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
+import { useAppDispatch, useAppSelector } from '../common/reduxTypedHooks';
 
 const useLoginStatus = () => {
 	const dispatch = useAppDispatch();

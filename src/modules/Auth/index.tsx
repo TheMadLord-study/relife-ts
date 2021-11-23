@@ -2,10 +2,11 @@ import { FC, useState } from 'react';
 import Modal from 'react-modal';
 import { Button, Row, Col } from 'react-bootstrap';
 
-import { useAppSelector } from 'library/hooks/reduxTypedHooks';
+import { useAppSelector } from 'library/hooks/common/reduxTypedHooks';
 
 import Login from './frames/LoginForm';
 import Register from './frames/RegisterForm';
+import ChangePass from './frames/ChangePassForm';
 
 import st from './index.module.scss';
 
@@ -31,10 +32,16 @@ const Auth: FC = () => {
 						Login
 					</Button>
 				</Col>
+				<Col>
+					<Button variant="primary" onClick={() => setTab('changePass')}>
+						changePass
+					</Button>
+				</Col>
 			</Row>
 			<Row>
 				{tab === 'register' && <Register />}
 				{tab === 'login' && <Login />}
+				{tab === 'changePass' && <ChangePass setTab={setTab} />}
 			</Row>
 		</Modal>
 	);

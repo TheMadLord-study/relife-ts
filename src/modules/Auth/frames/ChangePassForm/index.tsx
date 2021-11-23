@@ -1,6 +1,7 @@
+import { useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
-import useRegister from 'library/hooks/auth/useRegister';
+import useChangePassword from 'library/hooks/auth/useChangePassword';
 
 interface PhoneValues {
 	phonenumber: string;
@@ -26,9 +27,9 @@ const PhoneForm = ({ submit, isLoading }: PhoneProps) => {
 				submit(data.phonenumber);
 			})}
 		>
-			<input {...register('phonenumber')} id="phonenumber" disabled={isLoading} />
+			<input {...register('phonenumber', { required: true })} id="phonenumber" disabled={isLoading} />
 			<button type="submit" disabled={isLoading}>
-				Register
+				Change password
 			</button>
 		</form>
 	);
@@ -57,25 +58,35 @@ const CodeForm = ({ submit, isLoading }: CodeProps) => {
 				placeholder="Повторить пароль..."
 			/>
 			<button type="submit" disabled={isLoading}>
-				Register
+				Change
 			</button>
 		</form>
 	);
 };
 
-const RegisterForm = () => {
-	const registerUser = useRegister();
+interface Props {
+	setTab: (tab: string) => void;
+}
+
+const ChangePassForm = ({ setTab }: Props) => {
+	const change = useChangePassword();
+
+	const switchTab = useCallback(() => {
+		setTab('login');
+	}, [setTab]);
+
+	useEffect(() => {
+		if (change.step === '3-login') {
+			switchTab();
+		}
+	}, [change.step, switchTab]);
 
 	return (
 		<>
-			{registerUser.step === '1-phone' && (
-				<PhoneForm submit={registerUser.registerPhone} isLoading={registerUser.isLoading} />
-			)}
-			{registerUser.step === '2-code' && (
-				<CodeForm submit={registerUser.verifyOnRegister} isLoading={registerUser.isLoading} />
-			)}
+			{change.step === '1-phone' && <PhoneForm submit={change.resetPassword} isLoading={change.isLoading} />}
+			{change.step === '2-code' && <CodeForm submit={change.confirmReset} isLoading={change.isLoading} />}
 		</>
 	);
 };
 
-export default RegisterForm;
+export default ChangePassForm;

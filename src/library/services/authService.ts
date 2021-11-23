@@ -19,9 +19,19 @@ const verifyOnRegister = async (data: VerifyOnRegister): Promise<AxiosResponse<V
 	return axios.post('/auth/patient/verify_on_register/', data);
 };
 
+const passwordReset = async (data: PasscodeCreate): Promise<AxiosResponse<PasscodeCreate>> => {
+	return axios.post('/auth/patient/password_reset_request/', data);
+};
+
+const passwordConfirm = async (data: VerifyOnRegister): Promise<AxiosResponse> => {
+	return axios.post('/auth/patient/password_confirm_request/', data);
+};
+
 export const authService = {
 	login,
 	logout,
 	registerPhone,
 	verifyOnRegister,
+	passwordReset,
+	passwordConfirm,
 };

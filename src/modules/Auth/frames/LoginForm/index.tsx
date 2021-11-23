@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 
 import { Login } from 'library/models/Auth';
 
-import useLogin from 'library/hooks/useLogin';
+import useLogin from 'library/hooks/auth/useLogin';
 
 interface FormValues {
 	phonenumber: string;

@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
-import useUser from 'library/hooks/useUser';
-import useLogin from 'library/hooks/useLogin';
+import useUser from 'library/hooks/user/useUser';
+import useLogin from 'library/hooks/auth/useLogin';
 
 import { openAuthModal } from 'library/reducers/modalReducer';
-import { useAppDispatch } from 'library/hooks/reduxTypedHooks';
+import { useAppDispatch } from 'library/hooks/common/reduxTypedHooks';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
