@@ -13,6 +13,7 @@ const useLoginStatus = () => {
 	const common = useAppSelector((store) => store.common);
 
 	const checkToken = useCallback(() => {
+		// токен был изменен или удален на другой вкладке - загружаем новые настройки
 		const token = localStorage.getItem('token');
 		if (token) {
 			xhr.defaults.headers.common['Authorization'] = `Token ${token}`;
@@ -27,6 +28,7 @@ const useLoginStatus = () => {
 	}, [dispatch, navigate]);
 
 	const loadUserData = useCallback(() => {
+		// первоначальная загрузка страницы - загружаем настройки и данные
 		const token = localStorage.getItem('token');
 		if (token && !users.user.id && !users.isLoading) {
 			dispatch(getIAm());

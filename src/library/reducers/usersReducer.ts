@@ -5,7 +5,6 @@ import { userService } from 'library/services/usersService';
 import { authService } from 'library/services/authService';
 
 import { IAm } from 'library/models/Users';
-import { stat } from 'fs';
 
 interface UserState {
 	user: IAm;
