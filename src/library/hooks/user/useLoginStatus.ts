@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import xhr from 'core/axios/config';
 
 import { getIAm, clearUserData } from 'library/reducers/usersReducer';
-import { getSettings } from 'library/reducers/commonReducer';
-import { useAppDispatch } from '../common/reduxTypedHooks';
+import { getSettings, getModules } from 'library/reducers/commonReducer';
+import { useAppDispatch, useAppSelector } from '../common/reduxTypedHooks';
 
 const useLoginStatus = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+	const users = useAppSelector((store) => store.users);
+	const common = useAppSelector((store) => store.common);
 
 	const checkToken = useCallback(() => {
 		const token = localStorage.getItem('token');
@@ -21,15 +23,23 @@ const useLoginStatus = () => {
 			navigate('/');
 		}
 		dispatch(getSettings());
+		dispatch(getModules());
 	}, [dispatch, navigate]);
 
 	const loadUserData = useCallback(() => {
 		const token = localStorage.getItem('token');
-		if (token) {
+		if (token && !users.user.id && !users.isLoading) {
 			dispatch(getIAm());
 		}
-		dispatch(getSettings());
-	}, [dispatch]);
+
+		if (common.settings.upper_menu.length === 0 && !common.settingsLoading) {
+			dispatch(getSettings());
+		}
+
+		if (common.modules.length === 0 && !common.modulesLoading) {
+			dispatch(getModules());
+		}
+	}, [dispatch, users, common]);
 
 	useEffect(() => {
 		loadUserData();

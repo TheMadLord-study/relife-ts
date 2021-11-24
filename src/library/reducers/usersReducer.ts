@@ -5,13 +5,16 @@ import { userService } from 'library/services/usersService';
 import { authService } from 'library/services/authService';
 
 import { IAm } from 'library/models/Users';
+import { stat } from 'fs';
 
 interface UserState {
 	user: IAm;
+	isLoading: boolean;
 }
 
 const initialState = {
 	user: {},
+	isLoading: false,
 } as UserState;
 
 export const getIAm = createAsyncThunk('users/i_am', async () => {
@@ -37,8 +40,13 @@ export const users = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
+		builder.addCase(getIAm.pending, (state, action) => {
+			state.isLoading = true;
+		});
+
 		builder.addCase(getIAm.fulfilled, (state, action) => {
 			state.user = action.payload;
+			state.isLoading = false;
 		});
 
 		builder.addCase(logout.fulfilled, (state) => {
