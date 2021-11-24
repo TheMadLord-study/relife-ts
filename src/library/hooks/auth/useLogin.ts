@@ -8,7 +8,7 @@ import { Login } from 'library/models/Auth';
 import { authService } from 'library/services/authService';
 
 import { getIAm, logout } from 'library/reducers/usersReducer';
-import { getSettings } from 'library/reducers/commonReduser';
+import { getSettings } from 'library/reducers/commonReducer';
 import { closeAuthModal } from 'library/reducers/modalReducer';
 
 const useLogin = () => {

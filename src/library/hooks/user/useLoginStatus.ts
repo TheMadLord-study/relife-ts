@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import xhr from 'core/axios/config';
 
 import { getIAm, clearUserData } from 'library/reducers/usersReducer';
-import { getSettings } from 'library/reducers/commonReduser';
+import { getSettings } from 'library/reducers/commonReducer';
 import { useAppDispatch } from '../common/reduxTypedHooks';
 
 const useLoginStatus = () => {
