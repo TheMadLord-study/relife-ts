@@ -30,15 +30,15 @@ const useLoginStatus = () => {
 	const loadUserData = useCallback(() => {
 		// первоначальная загрузка страницы - загружаем настройки и данные
 		const token = localStorage.getItem('token');
-		if (token && !users.user.id && !users.isLoading) {
+		if (token && !users.user?.id && !users.isLoading) {
 			dispatch(getIAm());
 		}
 
-		if (common.settings.upper_menu.length === 0 && !common.settingsLoading) {
+		if (common.settings?.upper_menu.length === 0 && !common.settingsLoading) {
 			dispatch(getSettings());
 		}
 
-		if (common.modules.length === 0 && !common.modulesLoading) {
+		if (common.modules?.length === 0 && !common.modulesLoading) {
 			dispatch(getModules());
 		}
 	}, [dispatch, users, common]);

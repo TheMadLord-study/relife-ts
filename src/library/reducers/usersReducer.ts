@@ -7,7 +7,7 @@ import { authService } from 'library/services/authService';
 import { IAm } from 'library/models/Users';
 
 interface UserState {
-	user: IAm;
+	user: IAm | undefined;
 	isLoading: boolean;
 }
 
@@ -16,9 +16,13 @@ const initialState = {
 	isLoading: false,
 } as UserState;
 
-export const getIAm = createAsyncThunk('users/i_am', async () => {
-	const response = await userService.getIAm();
-	return response.data;
+export const getIAm = createAsyncThunk('users/i_am', async (_, { rejectWithValue }) => {
+	try {
+		const response = await userService.getIAm();
+		return response.data;
+	} catch (error) {
+		rejectWithValue(error);
+	}
 });
 
 export const logout = createAsyncThunk('users/logout', async () => {

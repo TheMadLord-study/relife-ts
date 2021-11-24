@@ -22,7 +22,7 @@ const Header: FC = () => {
 					<Button variant="primary">Test</Button>
 				</Link>
 				<Nav>
-					{!user.user.id && !user.token ? (
+					{!user.user?.id && !user.token ? (
 						<Button onClick={() => dispatch(openAuthModal())} variant="primary">
 							Login
 						</Button>

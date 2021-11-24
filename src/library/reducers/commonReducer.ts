@@ -4,8 +4,8 @@ import { PlatformSettings, ModuleRead } from 'library/models/Common';
 import { commonService } from 'library/services/commonService';
 
 interface CommonState {
-	settings: PlatformSettings;
-	modules: ModuleRead[];
+	settings: PlatformSettings | undefined;
+	modules: ModuleRead[] | undefined;
 	settingsLoading: boolean;
 	modulesLoading: boolean;
 }
@@ -17,14 +17,24 @@ const initialState: CommonState = {
 	modulesLoading: false,
 };
 
-export const getSettings = createAsyncThunk('common/settings', async () => {
-	const response = await commonService.getSettings();
-	return response.data;
+export const getSettings = createAsyncThunk('common/settings', async (_, { rejectWithValue }) => {
+	try {
+		const response = await commonService.getSettings();
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		rejectWithValue(error);
+	}
 });
 
-export const getModules = createAsyncThunk('common/modules', async () => {
-	const response = await commonService.getModules();
-	return response.data;
+export const getModules = createAsyncThunk('common/modules', async (_, { rejectWithValue }) => {
+	try {
+		const response = await commonService.getModules();
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		rejectWithValue(error);
+	}
 });
 
 export const common = createSlice({
@@ -47,6 +57,11 @@ export const common = createSlice({
 
 		builder.addCase(getModules.fulfilled, (state, action) => {
 			state.modules = action.payload;
+			state.modulesLoading = false;
+		});
+
+		builder.addCase(getModules.rejected, (state, action) => {
+			state.modules = [];
 			state.modulesLoading = false;
 		});
 	},
