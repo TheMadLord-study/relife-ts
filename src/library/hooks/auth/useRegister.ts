@@ -16,12 +16,16 @@ const useRegister = () => {
 
 	const registerPhone = async (phone: string) => {
 		setIsLoading(true);
-		await authService.registerPhone({ phonenumber: phone }).then((response) => {
-			setStep('2-code');
-			setPhonenumber(phone);
-			console.log(response);
-		});
-		setIsLoading(false);
+		await authService
+			.registerPhone({ phonenumber: phone })
+			.then((response) => {
+				setStep('2-code');
+				setPhonenumber(phone);
+				console.log(response);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 
 	const verifyOnRegister = async (code: string, password: string) => {
@@ -37,8 +41,10 @@ const useRegister = () => {
 				});
 				dispatch(getIAm());
 				dispatch(closeAuthModal());
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
-		setIsLoading(false);
 	};
 
 	return {

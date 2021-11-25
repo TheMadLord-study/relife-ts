@@ -12,12 +12,19 @@ const Test: FC = () => {
 				<Col>Test page</Col>
 			</Row>
 			<Row>
-				<Button variant="primary" onClick={test.test1}>
-					Test1
-				</Button>
-				<Button variant="primary" onClick={test.test2}>
-					Test1
-				</Button>
+				<Col sm={2}>
+					<Row className="mb-3">
+						<Button variant="primary" onClick={test.test1}>
+							Test1
+						</Button>
+					</Row>
+					<Row>
+						<Button variant="primary" onClick={test.test2}>
+							Test1
+						</Button>
+					</Row>
+				</Col>
+				<Col sm={10}></Col>
 			</Row>
 		</Container>
 	);

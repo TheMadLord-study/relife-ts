@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import Modal from 'react-modal';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 
 import { useAppSelector } from 'library/hooks/common/reduxTypedHooks';
 
@@ -11,7 +11,7 @@ import ChangePass from './frames/ChangePassForm';
 import st from './index.module.scss';
 
 const Auth: FC = () => {
-	const [tab, setTab] = useState<string>('register');
+	const [tab, setTab] = useState<any>('login');
 	const isOpen = useAppSelector((store) => store.modals.authModalIsOpen);
 
 	return (
@@ -21,28 +21,17 @@ const Auth: FC = () => {
 			overlayClassName={st.overlay}
 			appElement={document.getElementById('root') as HTMLElement}
 		>
-			<Row xs={2} md={4} lg={6}>
-				<Col>
-					<Button variant="primary" onClick={() => setTab('register')}>
-						Register
-					</Button>
-				</Col>
-				<Col>
-					<Button variant="primary" onClick={() => setTab('login')}>
-						Login
-					</Button>
-				</Col>
-				<Col>
-					<Button variant="primary" onClick={() => setTab('changePass')}>
-						changePass
-					</Button>
-				</Col>
-			</Row>
-			<Row>
-				{tab === 'register' && <Register />}
-				{tab === 'login' && <Login />}
-				{tab === 'changePass' && <ChangePass setTab={setTab} />}
-			</Row>
+			<Tabs activeKey={tab} onSelect={(tab) => setTab(tab)} className="mb-3">
+				<Tab eventKey="register" title="Register">
+					<Register />
+				</Tab>
+				<Tab eventKey="login" title="Login">
+					<Login />
+				</Tab>
+				<Tab eventKey="change password" title="Change password">
+					<ChangePass setTab={setTab} />
+				</Tab>
+			</Tabs>
 		</Modal>
 	);
 };

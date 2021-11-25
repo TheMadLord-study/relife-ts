@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import useChangePassword from 'library/hooks/auth/useChangePassword';
 
 interface PhoneValues {
-	phonenumber: string;
+	phonenumberChange: string;
 }
 
 interface CodeValues {
@@ -24,10 +24,10 @@ const PhoneForm = ({ submit, isLoading }: PhoneProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit((data) => {
-				submit(data.phonenumber);
+				submit(data.phonenumberChange);
 			})}
 		>
-			<input {...register('phonenumber', { required: true })} id="phonenumber" disabled={isLoading} />
+			<input {...register('phonenumberChange', { required: true })} id="phonenumberChange" disabled={isLoading} />
 			<button type="submit" disabled={isLoading}>
 				Change password
 			</button>

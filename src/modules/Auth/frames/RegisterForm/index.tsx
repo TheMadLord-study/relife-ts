@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
 
 import useRegister from 'library/hooks/auth/useRegister';
 
 interface PhoneValues {
-	phonenumber: string;
+	phonenumberRegister: string;
 }
 
 interface CodeValues {
@@ -21,16 +22,25 @@ const PhoneForm = ({ submit, isLoading }: PhoneProps) => {
 	const { register, handleSubmit } = useForm<PhoneValues>();
 
 	return (
-		<form
+		<Form
 			onSubmit={handleSubmit((data) => {
-				submit(data.phonenumber);
+				submit(data.phonenumberRegister);
 			})}
 		>
-			<input {...register('phonenumber')} id="phonenumber" disabled={isLoading} />
-			<button type="submit" disabled={isLoading}>
+			<Form.Group className="mb-3">
+				<Form.Label>Phone number</Form.Label>
+				<Form.Control
+					{...register('phonenumberRegister', { required: true })}
+					id="phonenumberRegister"
+					disabled={isLoading}
+					type="text"
+				/>
+				<Form.Text className="text-muted">We'll never share your phone with anyone else.</Form.Text>
+			</Form.Group>
+			<Button variant="primary" type="submit" disabled={isLoading}>
 				Register
-			</button>
-		</form>
+			</Button>
+		</Form>
 	);
 };
 
