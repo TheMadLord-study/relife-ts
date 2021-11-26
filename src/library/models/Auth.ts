@@ -1,5 +1,6 @@
 export interface Login {
 	phonenumber?: string;
+	phonenumberLogin?: string;
 	username?: string;
 	password: string;
 }

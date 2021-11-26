@@ -14,7 +14,7 @@ const LoginForm = () => {
 	const login = useLogin();
 
 	const handleLogin = (data: Login) => {
-		login.login(data);
+		login.login({ phonenumber: data.phonenumberLogin, password: data.password });
 	};
 
 	return (
