@@ -43,11 +43,11 @@ export const users = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getIAm.pending, (state, action) => {
+		builder.addCase(getIAm.pending, (state: UserState) => {
 			state.isLoading = true;
 		});
 
-		builder.addCase(getIAm.fulfilled, (state, action) => {
+		builder.addCase(getIAm.fulfilled, (state: UserState, action) => {
 			state.user = action.payload;
 			state.isLoading = false;
 		});
