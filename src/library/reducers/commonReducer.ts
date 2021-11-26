@@ -1,36 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from 'core/redux/rootReducer';
-import { PlatformSettings, ModuleRead } from 'library/models/Common';
+import { ModuleRead } from 'library/models/Common';
 import { commonService } from 'library/services/commonService';
 
 interface CommonState {
-	settings: PlatformSettings | undefined;
 	modules: ModuleRead[] | undefined;
-	settingsLoading: boolean;
 	modulesLoading: boolean;
 }
 
 const initialState: CommonState = {
-	settings: { exercices_library: false, upper_menu: [] },
 	modules: [],
-	settingsLoading: false,
 	modulesLoading: false,
 };
-
-export const getSettings = createAsyncThunk('common/settings', async (_, { rejectWithValue }) => {
-	try {
-		const response = await commonService.getSettings();
-		return response.data;
-	} catch (error) {
-		console.log(error);
-		rejectWithValue(error);
-	}
-});
 
 export const getModules = createAsyncThunk('common/modules', async (_, { rejectWithValue }) => {
 	try {
 		const response = await commonService.getModules();
-		return response.data;
+		let modules = [...response.data];
+		modules = [...modules.filter((module) => module.permissions.indexOf('view_module') !== -1)];
+		return modules;
 	} catch (error) {
 		console.log(error);
 		rejectWithValue(error);
@@ -42,15 +30,6 @@ export const common = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(getSettings.pending, (state, action) => {
-			state.settingsLoading = true;
-		});
-
-		builder.addCase(getSettings.fulfilled, (state, action) => {
-			state.settings = action.payload;
-			state.settingsLoading = false;
-		});
-
 		builder.addCase(getModules.pending, (state, action) => {
 			state.modulesLoading = true;
 		});
@@ -67,7 +46,7 @@ export const common = createSlice({
 	},
 });
 
-export const selectSettings = (state: RootState) => state.common.settings;
 export const selectModules = (state: RootState) => state.common.modules;
+export const selectModulesLoading = (state: RootState) => state.common.modulesLoading;
 
 export default common.reducer;

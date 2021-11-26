@@ -11,10 +11,16 @@ export interface PlatformSettings {
 	upper_menu: MenuItem[];
 }
 
+export interface Settings {
+	type: string;
+	code: string;
+	menu: string;
+}
+
 export interface ModuleRead {
 	id: number;
 	permissions: string;
-	settings: string;
+	settings: Settings;
 	code: string;
 	verbose_name: string;
 }

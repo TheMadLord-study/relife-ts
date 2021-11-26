@@ -2,14 +2,16 @@ import { FC } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 
 import useTest from 'library/hooks/useTest';
-
-const Test: FC = () => {
+interface Props {
+	title?: string;
+}
+const Test: FC<Props> = ({ title }) => {
 	const test = useTest();
 
 	return (
 		<Container className="d-flex flex-grow-1 flex-column">
 			<Row>
-				<Col>Test page</Col>
+				<Col>{title ? title : 'Test page'}</Col>
 			</Row>
 			<Row>
 				<Col sm={2}>

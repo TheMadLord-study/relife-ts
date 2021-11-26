@@ -6,12 +6,14 @@ import useUser from 'library/hooks/user/useUser';
 import useLogin from 'library/hooks/auth/useLogin';
 
 import { openAuthModal } from 'library/reducers/modalReducer';
-import { useAppDispatch } from 'library/hooks/common/reduxTypedHooks';
+import { useAppDispatch, useAppSelector } from 'library/hooks/common/reduxTypedHooks';
+import { selectModules } from 'library/reducers/commonReducer';
 
 const Header: FC = () => {
 	const dispatch = useAppDispatch();
 	const user = useUser();
 	const { logoutUser, isLoading } = useLogin();
+	const modules = useAppSelector(selectModules);
 	return (
 		<Navbar bg="dark" variant="dark">
 			<Container>
@@ -21,6 +23,11 @@ const Header: FC = () => {
 				<Link to="/test">
 					<Button variant="primary">Test</Button>
 				</Link>
+				{modules?.map((module) => (
+					<Link to={`/${module.code}`} key={module.code}>
+						<Button variant="primary">{module.verbose_name}</Button>
+					</Link>
+				))}
 				<Nav>
 					{!user.user?.id && !user.token ? (
 						<Button onClick={() => dispatch(openAuthModal())} variant="primary">

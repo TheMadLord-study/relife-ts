@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import xhr from 'core/axios/config';
 
 import { getIAm, clearUserData } from 'library/reducers/usersReducer';
-import { getSettings, getModules } from 'library/reducers/commonReducer';
+import { getModules } from 'library/reducers/commonReducer';
 import { useAppDispatch, useAppSelector } from '../common/reduxTypedHooks';
 
 const useLoginStatus = () => {
@@ -23,7 +23,6 @@ const useLoginStatus = () => {
 			dispatch(clearUserData());
 			navigate('/');
 		}
-		dispatch(getSettings());
 		dispatch(getModules());
 	}, [dispatch, navigate]);
 
@@ -32,10 +31,6 @@ const useLoginStatus = () => {
 		const token = localStorage.getItem('token');
 		if (token && !users.user?.id && !users.isLoading) {
 			dispatch(getIAm());
-		}
-
-		if (common.settings?.upper_menu.length === 0 && !common.settingsLoading) {
-			dispatch(getSettings());
 		}
 
 		if (common.modules?.length === 0 && !common.modulesLoading) {

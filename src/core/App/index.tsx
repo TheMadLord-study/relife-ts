@@ -1,21 +1,16 @@
 import { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
 
 import Loader from 'modules/Loader';
 import Header from 'modules/Header';
-import Home from 'modules/Home';
+import AppRoutes from 'core/App/Routes';
 import Auth from 'modules/Auth';
-import Test from 'modules/Test';
 
 const App: FC = () => {
 	return (
 		<>
 			<Loader />
 			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/test" element={<Test />} />
-			</Routes>
+			<AppRoutes />
 			<Auth />
 		</>
 	);
